@@ -10,5 +10,5 @@ setup(
         "html5lib==1.0.1",
         "mechanize==0.3.7",
     ],
-    packages=find_packages('.')
+    packages=find_packages()
 )

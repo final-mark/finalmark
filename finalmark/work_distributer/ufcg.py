@@ -1,5 +1,5 @@
-from finalmark.work_distributer.requester import RefreshRequester
-from finalmark.work_distributer import Worker
+from work_distributer.requester import RefreshRequester
+from refresher.work_distributer import Worker
 
 class UfcgDistributer(object):
 
@@ -111,9 +111,3 @@ class UfcgDistributer(object):
         for t in threads:
             t.join()
         user_info["subjects"] = self.data.get('subjects')
-
-
-
-
-
-
