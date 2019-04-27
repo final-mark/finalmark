@@ -109,6 +109,6 @@ WORKER_ACTIONS = {
     "get_user_info": get_user_info
 }
 
-REFRESH_ACTIONS = {
+REFRESHER_ACTIONS = {
     "refresh_user": refresh_user
 }
