@@ -1,5 +1,5 @@
 from plugin_base import pluginfy
-import contexts
+from finalmark import contexts
 
 class FinalmarkRefresherPlugin(object):
     ACTIONS = contexts.REFRESHER_ACTIONS
