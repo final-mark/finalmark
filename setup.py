@@ -8,8 +8,7 @@ setup(
     install_requires=[
         "beautifulsoup4==4.6.3",
         "html5lib==1.0.1",
-        "mechanize==0.3.7",
-        "git+https://github.com/matheuscmelo/utils"
+        "mechanize==0.3.7"
     ],
     packages=find_packages()
 )
