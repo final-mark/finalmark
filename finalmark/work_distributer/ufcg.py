@@ -16,6 +16,7 @@ class UfcgDistributer(object):
         threads = []
         for subject in self.data.get('subjects'):
             request = {
+                "plugin": "finalmark",
                 "action": "get_marks_from_subject",
                 "username": self.data.get('username'),
                 "password": self.data.get('password'),
@@ -44,6 +45,7 @@ class UfcgDistributer(object):
         threads = []
         for subject in self.data.get('subjects'):
             request = {
+                "plugin": "finalmark",
                 "action": "get_absences_from_subject",
                 "username": self.data.get('username'),
                 "password": self.data.get('password'),
@@ -68,6 +70,7 @@ class UfcgDistributer(object):
             user_info.update(response['data'])
 
         request = {
+            "plugin": "finalmark",
             "action": "get_user_info",
             "username": self.data.get('username'),
             "password": self.data.get('password'),
@@ -86,6 +89,7 @@ class UfcgDistributer(object):
                 user_info.get('subjects')[i]['credits'] = response['data'][i]
 
         request = {
+            "plugin": "finalmark",
             "action": "get_credits",
             "username": self.data.get('username'),
             "password": self.data.get('password'),
