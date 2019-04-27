@@ -1,11 +1,11 @@
-from work_distributer import requester
+from work_distributer.requester import RefreshRequester
 from refresher.work_distributer import Worker
 
 class UfcgDistributer(object):
 
     def __init__(self, data):
         self.data = data
-        self.requester = requester.RefreshRequester('worker_queue')
+        self.requester = RefreshRequester('worker_queue')
 
     def get_marks_from_subjects(self):
 
