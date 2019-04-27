@@ -29,6 +29,7 @@ def refresh_user(*args, **kwargs):
         return user_info
     return {"status": "login_error"}
 
+
 def extract_cookie(cookiejar):
 
     for c in cookiejar:
@@ -45,6 +46,69 @@ def extract_cookie(cookiejar):
     return c
 
 
-POSSIBLE_ACTIONS = {
+def get_auth(username, password, cookie=None, *args, **kwargs):
+    api = UfcgApi(username, password)
+    if cookie is not None:
+        cookie = loads(cookie)
+        cookie = Cookie(**cookie)
+        api.br.cookiejar.set_cookie(cookie)
+    else:
+        api.authenticate()
+    return api
+
+
+def get_marks_from_subject(username, password, subject, cookie=None, *args, **kwargs):
+    marks = cache.get("{}:{}:marks".format(username, subject.get('name')))
+    if marks is None:
+        api = get_auth(username, password, cookie=cookie)
+        marks = api.get_marks_from_subject(subject)
+        cache.set("{}:{}:marks".format(username,
+                                       subject.get('name')),
+                                       marks)
+
+    return {"data": marks}
+
+
+def get_absences_from_subject(username, password, subject, cookie=None, *args, **kwargs):
+    absences = cache.get("{}:{}:absences".format(username, subject.get('name')))
+    if absences is None:
+        api = get_auth(username, password, cookie=cookie)
+        absences = api.get_absences_from_subject(subject)
+        cache.set("{}:{}:absences".format(username,
+                                          subject.get('name')),
+                                          absences)
+
+    return {"data": absences }
+
+
+def get_credits(username, password, subjects, cookie=None, *args, **kwargs):
+    credits = cache.get("{}:credits".format(username))
+    if credits is None:
+        api = get_auth(username, password, cookie=cookie)
+        credits = api.get_credits(subjects)
+        cache.set("{}:credits".format(username), credits)
+
+    return {"data": credits}
+
+
+def get_user_info(username, password, cookie=None, *args, **kwargs):
+    user_info = cache.get("{}:user_info".format(username))
+    if user_info is None:
+        api = get_auth(username, password, cookie=cookie)
+        user_info = api.get_user_info()
+        cache.set("{}:user_info".format(username), user_info)
+    return {"data": user_info}
+
+
+
+WORKER_ACTIONS = {
+    "get_auth": get_auth,
+    "get_marks_from_subject": get_marks_from_subject,
+    "get_absences_from_subject": get_absences_from_subject,
+    "get_credits": get_credits,
+    "get_user_info": get_user_info
+}
+
+REFRESH_ACTIONS = {
     "refresh_user": refresh_user
 }
