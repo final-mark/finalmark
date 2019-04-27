@@ -1,5 +1,5 @@
 from utils.work_distributer.requester import RefreshRequester
-from refresher.work_distributer import Worker
+from utils.work_distributer import Worker
 
 class UfcgDistributer(object):
 
