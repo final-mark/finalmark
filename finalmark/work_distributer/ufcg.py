@@ -67,7 +67,7 @@ class UfcgDistributer(object):
 
         def f(requester, data, user_info):
             response = requester.block_request(data)
-            user_info.update(response['data'])
+            user_info.update({"user_info": response['data']})
 
         request = {
             "plugin": "finalmark",

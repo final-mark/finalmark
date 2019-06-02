@@ -48,7 +48,7 @@ class UfcgApi(AcademicApi):
 
             self._set_credits(subjects)
         return subjects
-    
+
     def get_subjects(self):
         self.br.open('https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador?command=AlunoTurmasListar')
         html =  self.br.response().read()
@@ -78,8 +78,9 @@ class UfcgApi(AcademicApi):
             mark = raw_marks[i]
             this_marks.append(float(mark.getText())) if mark.getText() else this_marks.append("S/N")
         return this_marks
-    
+
     def get_absences_from_subject(self, subject):
+        print(subject)
         code = subject.get('code')
         class_ = subject.get('class')
         semester = subject.get('semester')
@@ -125,6 +126,13 @@ class UfcgApi(AcademicApi):
             html = self.br.response().read()
             soup = BeautifulSoup(html, 'html.parser')
 
+            name = soup.find(class_="panel-body")
+            name = name.find_all(class_="row")[0]
+            name = name.find_all(class_="col-md-6 col-sm-8")[0]
+            name = name.getText()
+            name = " ".join(name.split()[1:])
+
+
             semesters = soup.find(id="periodos-integralizados")
             semesters = semesters.find_all('div')
             total_semesters = semesters[1].getText()
@@ -144,6 +152,7 @@ class UfcgApi(AcademicApi):
             total_subjects = total_subjects.find_all("td")[5]
             total_subjects = total_subjects.getText()
 
+            user_info['name'] = name
             user_info['semesters'] = int(total_semesters)
             user_info['max_semesters'] = int(max_semesters)
             user_info['cra'] = float(cra.replace(',','.'))
