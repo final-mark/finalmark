@@ -80,7 +80,6 @@ class UfcgApi(AcademicApi):
         return this_marks
 
     def get_absences_from_subject(self, subject):
-        print(subject)
         code = subject.get('code')
         class_ = subject.get('class')
         semester = subject.get('semester')
