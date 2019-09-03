@@ -58,7 +58,7 @@ def get_auth(username, password, cookie=None, *args, **kwargs):
 
 
 def get_marks_from_subject(username, password, subject, cookie=None, *args, **kwargs):
-    marks = cache.get("{}:{}:marks".format(username, subject.get('name')))
+    marks = cache.get("{}:{}:marks".format(username, subject.get('name').encode('utf-8')))
     if marks is None:
         api = get_auth(username, password, cookie=cookie)
         marks = api.get_marks_from_subject(subject)
