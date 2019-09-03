@@ -58,11 +58,11 @@ def get_auth(username, password, cookie=None, *args, **kwargs):
 
 
 def get_marks_from_subject(username, password, subject, cookie=None, *args, **kwargs):
-    marks = cache.get("{}:{}:marks".format(username, subject.get('name').encode('utf-8')))
+    marks = cache.get(u"{}:{}:marks".format(username, subject.get('name')))
     if marks is None:
         api = get_auth(username, password, cookie=cookie)
         marks = api.get_marks_from_subject(subject)
-        cache.set("{}:{}:marks".format(username,
+        cache.set(u"{}:{}:marks".format(username,
                                        subject.get('name').encode('utf-8'),
                                        marks)
 
@@ -70,11 +70,11 @@ def get_marks_from_subject(username, password, subject, cookie=None, *args, **kw
 
 
 def get_absences_from_subject(username, password, subject, cookie=None, *args, **kwargs):
-    absences = cache.get("{}:{}:absences".format(username, subject.get('name').encode('utf-8')))
+    absences = cache.get(u"{}:{}:absences".format(username, subject.get('name')))
     if absences is None:
         api = get_auth(username, password, cookie=cookie)
         absences = api.get_absences_from_subject(subject)
-        cache.set("{}:{}:absences".format(username,
+        cache.set(u"{}:{}:absences".format(username,
                                           subject.get('name')),
                                           absences)
 
