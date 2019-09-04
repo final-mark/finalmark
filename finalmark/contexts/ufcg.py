@@ -63,8 +63,8 @@ def get_marks_from_subject(username, password, subject, cookie=None, *args, **kw
         api = get_auth(username, password, cookie=cookie)
         marks = api.get_marks_from_subject(subject)
         cache.set("{}:{}:marks".format(username,
-                                        subject.get('code'),
-                                        marks))
+                                        subject.get('code')),
+                                        marks)
 
     return {"data": marks}
 
