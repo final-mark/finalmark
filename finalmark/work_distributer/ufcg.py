@@ -28,7 +28,7 @@ class UfcgDistributer(object):
                     "class": subject.get('class'),
                     "semester": subject.get('semester')
                 },
-                "cookiejar": self.data.get('cookiejar')
+                "cookie": self.data.get('cookie')
             }
             worker = Worker(f, self.requester, request, subject)
             worker.start()
@@ -55,7 +55,7 @@ class UfcgDistributer(object):
                     "class": subject.get('class'),
                     "semester": subject.get('semester')
                 },
-                "cookiejar": self.data.get('cookiejar')
+                "cookie": self.data.get('cookie')
             }
             worker = Worker(f, self.requester, request, subject)
             worker.start()
@@ -74,7 +74,7 @@ class UfcgDistributer(object):
             "action": "get_user_info",
             "username": self.data.get('username'),
             "password": self.data.get('password'),
-            "cookiejar": self.data.get('cookiejar')
+            "cookie": self.data.get('cookie')
         }
         worker = Worker(f, self.requester, request, user_info)
         worker.start()
@@ -94,7 +94,7 @@ class UfcgDistributer(object):
             "username": self.data.get('username'),
             "password": self.data.get('password'),
             "subjects": [s['name'] for s in self.data.get('subjects')],
-            "cookiejar": self.data.get('cookiejar')
+            "cookie": self.data.get('cookie')
         }
 
 

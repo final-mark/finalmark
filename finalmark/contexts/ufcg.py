@@ -1,4 +1,5 @@
-from json import dumps
+from json import dumps, loads
+from cookielib import Cookie
 from finalmark.academic_parser.ufcg import UfcgApi
 from finalmark.work_distributer.ufcg import UfcgDistributer
 from finalmark.cache import Cache
@@ -20,7 +21,7 @@ def refresh_user(*args, **kwargs):
             "subjects": subjects,
             "username": username,
             "password": password,
-            "cookies": dumps(extract_cookie(api.br.cookiejar))
+            "cookie": dumps(extract_cookie(api.br.cookiejar))
         }
         user_info = {}
         distributer = UfcgDistributer(dist_data)
@@ -35,10 +36,11 @@ def extract_cookie(cookiejar):
     for c in cookiejar:
         cookie = c
 
-    extract = ['version', 'name', 'value', 'port', 'port_specified', 'domain',
-               'domain_specified', 'domain_initial_dot',
+    extract = ['version', 'name', 'value',
+               'port', 'port_specified',
+               'domain', 'domain_specified', 'domain_initial_dot',
                'path', 'path_specified', 'secure', 'expires',
-               'discard', 'comment', 'comment_url', 'rfc2109']
+               'discard','comment', 'comment_url', 'rest', 'rfc2109']
     c = {}
     for attr in extract:
         c[attr] = getattr(cookie, attr)
@@ -50,7 +52,23 @@ def get_auth(username, password, cookie=None, *args, **kwargs):
     api = UfcgApi(username, password)
     if cookie is not None:
         cookie = loads(cookie)
-        cookie = Cookie(**cookie)
+        cookie = Cookie(value=cookie.get('value'),
+                        domain=cookie.get('domain'),
+                        name=cookie.get('name'),
+                        port_specified=cookie.get('port_specified'),
+                        comment=cookie.get('comment'),
+                        domain_initial_dot=cookie.get('domain_initial_dot'),
+                        expires=cookie.get('expires'),
+                        domain_specified=cookie.get('domain_specified'),
+                        version=cookie.get('version'),
+                        rfc2109=cookie.get('rfc2109'),
+                        discard=cookie.get('discard'),
+                        path_specified=cookie.get('path_specified'),
+                        path=cookie.get('path'),
+                        port=cookie.get('port'),
+                        rest=cookie.get('rest'),
+                        comment_url=cookie.get('comment_url'),
+                        secure=cookie.get('secure'))
         api.br.cookiejar.set_cookie(cookie)
     else:
         api.authenticate()
