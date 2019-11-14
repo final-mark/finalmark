@@ -48,7 +48,8 @@ def extract_cookie(cookiejar):
                'discard','comment', 'comment_url', 'rest', 'rfc2109']
     c = {}
     for attr in extract:
-        c[attr] = getattr(cookie, attr)
+        if hasattr(cookie, attr):
+            c[attr] = getattr(cookie, attr)
 
     return c
 
@@ -71,7 +72,6 @@ def get_auth(username, password, cookie=None, *args, **kwargs):
                         path_specified=cookie.get('path_specified'),
                         path=cookie.get('path'),
                         port=cookie.get('port'),
-                        rest=cookie.get('rest'),
                         comment_url=cookie.get('comment_url'),
                         secure=cookie.get('secure'))
         api.br.cookiejar.set_cookie(cookie)
