@@ -45,11 +45,12 @@ def extract_cookie(cookiejar):
                'port', 'port_specified',
                'domain', 'domain_specified', 'domain_initial_dot',
                'path', 'path_specified', 'secure', 'expires',
-               'discard','comment', 'comment_url', 'rest', 'rfc2109']
+               'discard','comment', 'comment_url', 'rfc2109']
     c = {}
     for attr in extract:
-        if hasattr(cookie, attr):
+        try:
             c[attr] = getattr(cookie, attr)
+        except: continue
 
     return c
 
