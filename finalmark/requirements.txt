@@ -1,5 +1,5 @@
 beautifulsoup4==4.6.3
 bs4==0.0.1
 html5lib==1.0.1
-mechanize==0.3.7
+mechanize==0.4.6
 prometheus_client==0.7.1
